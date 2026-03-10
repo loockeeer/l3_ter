@@ -1,0 +1,373 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage[only,llbracket,rrbracket]{stmaryrd}
+\usepackage{manfnt}
+\DeclarePairedDelimiter\Brackets{\left\llbracket}{\right\rrbracket}
+\usetikzlibrary{matrix,graphs,graphs.standard}
+
+\title{Rapport TER}
+\author{Lucas Rooy}
+\date{Janvier 2026}
+
+\theoremstyle{definition}
+\newtheorem{notation}{Notation}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Définition}[section]
+
+\theoremstyle{remark}
+\newtheorem{notabene}{NB}[section]
+
+\newtheorem{theoreme}{Théorème}[section]
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{exemple}[theoreme]{Exemple}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\section{Notations}
+\begin{notation}[Composition]
+    On utilise dans toute la suite l'ordre de composition catégorique. C'est-à-dire $f\circ g =x\mapsto g(f(x))$.
+    De plus, pour simplifier les notations, on utilisera souvent la notation produit $f\circ g = f g$.
+\end{notation}
+\begin{notation}[Entiers]
+On note dans toute la suite $\forall n\in \mathbb N, [n] = \{0\leq i < n, i\in\mathbb N\}$. De sorte que $\forall n \in \mathbb N, |[n]| = n$.
+\end{notation}
+
+\section{Présentation par générateurs et relations}
+\subsection{D'un monoïde}
+
+\begin{definition}[Monoïde engendré par générateurs et relations]
+Soit $\Sigma$ un alphabet et $R \subseteq \Sigma^* \times \Sigma^*$ un ensemble de relations entre les mots de $\Sigma$.
+On dit que $\Sigma^*/R$ est engendré pas les générateurs $\Sigma$ et les relations $R$.
+\end{definition}
+
+\begin{definition}[Monoïde présenté par générateurs et relations]
+Soit $M$ un monoïde. Soit $\Sigma$ un alphabet, $R \subseteq \Sigma^* \times \Sigma^*$ et $f:\Sigma \to M$ une fonction \textit{d'interprétation}.
+On étend $f$ au monoïde présenté (de façon unique) en $f^*:\Sigma^*/R \to M$.
+On dit que $M$ est présenté par les générateurs $\Sigma$ et relations $R$ ssi. $f$ est bijective. 
+\end{definition}
+
+\subsection{D'une catégorie}
+Dans le cas d'une catégorie, l'ensemble d'objets devient un graphe $G$.
+\begin{definition}[Catégorie présentée par générateurs et relations]
+cf. MacLane\cite{catswm}
+\end{definition}
+
+\subsection{Motivation}
+
+
+\section{La catégorie $\Delta$ et autres}
+\subsection{Catégorie $\Delta$}
+\subsubsection{Définition}
+
+\begin{definition}[$\Delta$]
+La catégorie $\Delta$ a pour objets $\{[n], n \in \mathbb N\}$, et pour hom-sets :
+
+$$
+\forall m, n \in \mathbb N, \text{Hom}_\Delta([m],[n]) = \{f, f\in \mathcal F([m], [n]) \text{ et }f\text{ est croissante}\}\cite{catswm}
+$$
+\end{definition}
+
+\begin{notabene}
+On peut représenter une flèche de $\text{Hom}_\Delta([m], [n])$ par un graphe. Exemple pour $f \in \text{Hom}_\Delta([3],[2])$ :
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of nodes,
+    row sep = 1em, column sep = 2em,
+    nodes = {text depth = 1ex, text height = 2ex}
+  ]
+  {
+    0 & 0 \\
+    1 & 1 \\
+    2 &   \\
+  };
+  \draw [-stealth]
+    (m-1-1) edge (m-1-2)
+    (m-2-1) edge (m-1-2)
+    (m-3-1) edge (m-2-2)
+  ;
+\end{tikzpicture}
+\end{notabene}
+
+\subsubsection{Présentation}
+\textit{Cette partie est inspirée voire recopiée du MacLane\cite{catswm}, car elle est utile pour la compréhension du rapport mais aussi car j'ai passé du temps dessus avant de passer à $\Theta$.}
+
+
+On se donne un graphe G avec pour sommets $V = \{[n], n\in\mathbb N\}$.
+Pour les arêtes, on introduit deux constructions :
+\begin{itemize}
+    \item Pour $n \in \mathbb N$ et $0 \leq i \leq n$, une fonction croissante injective $\delta_i^n:[n] \to[n+1]$ qui omet $i$ dans son image
+    \item Pour $n \in \mathbb N$ et $0 \leq i \leq n$, une fonction croissante surjective $\sigma_i^n:[n+1]\to[n]$ qui envoie $i$ et $i+1$ sur la même image $i$.
+\end{itemize}
+Les arêtes sont alors ces $\delta_i^n$ et $\sigma_i^n$.
+
+Dans la suite, les $n$ sont omis.
+
+On soumet la catégorie libre engendrée par ce graphe $G^*$ aux relations :
+\begin{itemize}
+    \item $\delta_i\delta_j=\delta_{j+1}\delta_i$, $i \leq j$
+    \item $\sigma_j\sigma_j=\sigma_i\sigma_{j+1}$, $i \leq j$
+    \item $\sigma_j\delta_i=\delta_i\sigma_{j-1}$, $i < j$
+    \item $\sigma_j\delta_i=1$, $i=j$, $i=j+1$
+    \item $\sigma_j\delta_i=\delta_{i-1}\sigma_j$, $i>j+1$
+\end{itemize}
+
+
+\subsection{Catégorie $S$}
+\subsubsection{Définition}
+Il s'agit d'une restriction de $\Delta$ où les hom-sets sont : $\text{Hom}_S([n],[n])=S_n$ et $\forall m,n\in\mathbb N, m\neq n \implies \text{Hom}_\Delta([m], [n]) = \emptyset$. C'est-à-dire les bijections/permutations/symétries.
+\subsubsection{Présentation}
+On se donne un graphe G = (V,E) avec $V = \{[n], n\in\mathbb N\}$.
+On introduit une construction pour les arêtes : $\forall n \in \mathbb N^*, \forall i \in [n-1], \tau_i^n:[n]\to[n]$ telle que :
+\begin{equation}
+   \tau_i^n(j) =
+    \begin{cases}
+      i+1 & j = i \\
+      i & j = i +1 \\
+      j & \text{sinon}
+    \end{cases}       
+\end{equation}
+Autrement dit, $\tau_i$ est une permutation adjacente.
+Ainsi, $E$ est donné par $\{\tau_i^n, n \in \mathbb N^*, i\in[n]\}$.
+
+\begin{notabene}[Tri à bulles]
+Par l'algorithme du tri à bulles\cite{knuthvol3}, toute permutation peut se mettre sous la forme d'un produit de permutations adjacentes, ce qui donne l'idée de cette présentation. 
+
+Sans aller trop en détails, il s'agit d'un algorithme de tri déterministe par application de permutations adjacentes successives. Comme l'algorithme est déterministe, la suite de permutations adjacentes est canonique. On peut l'inverser pour obtenir le sens voulu
+\end{notabene}
+
+
+Pour les règles :
+\begin{itemize}
+    \item $\tau_i\tau_i=id$
+    \item $\tau_i\tau_j=\tau_j\tau_i$, $|i-j| > 1$
+    \item $\tau_{i+1}\tau_i\tau_{i+1}=\tau_i\tau_{i+1}\tau_i$
+\end{itemize}
+
+TODO : recopier la preuve depuis le Git
+\subsection{Catégorie $F$}
+\subsubsection{Définition}
+Il s'agit d'une catégorie qui contient $\Delta$ où les hom-sets sont : $\text{Hom}_F([m],[n])=\mathcal F([m],[n])$.
+\subsubsection{Présentation}
+On crée encore $G=(V,E)$ avec $V =\{[n], n\in\mathbb N\}$.
+Pour les arêtes, on prend l'union de celles utilisées pour $\Delta$ et pour $S$.
+Les règles :
+\begin{itemize}
+    \item Les règles de la présentation de $\Delta$
+    \item Les règles de la présentation de $S$
+    \item ...
+\end{itemize}
+\section{La catégorie $\Theta$}
+\subsection{Définition}
+La catégorie $\Theta$ a été introduite dans un manuscrit de André Joyal\cite{thetajoyal}. Sa définition originelle est complexe et ne nous intéresse pas ici. Plutôt, on s'intéresse à la définition de Clemens Berger basée sur le \textit{wreath product} ou produit en couronne.
+
+\begin{definition}[Wreath product ou \textit{Produit en couronne}]
+cf. nLab.
+\end{definition}
+
+\begin{definition}[Catégories $\Theta_n$]
+\[
+  \forall n \in \mathbb N^*, \Theta_n =
+    \begin{cases}
+      \Delta & \text{si n = 1}\\
+      \Delta\wr \Theta_{n-1} & \text{sinon}
+    \end{cases}\cite{iteratedwp}
+\]
+\end{definition}
+\subsection{Présentation de la catégorie $\Theta$}
+C'est une présentation \textbf{inductive}, basée sur la définition du produit en couronne.
+
+Quelques notations :
+\begin{itemize}
+    \item $x$ désigne textuellement soit $\delta$ soit $\sigma$, pour garder le document concis
+    \item Pour tout $n\in\mathbb N^*$, $V_n$, les sommets du graphe de la présentation de $\Theta_n$ 
+    \item Pour $n\in\mathbb N$, $E_n$, les arêtes du graphe de la présentation de $\Theta_n$
+    \item Pour $n\in\mathbb N$, $\mathcal R_n \subseteq (E_n^*)²$ les relations de la présentation de $\Theta_n$
+    \item Pour un morphisme générateur $y$, son interprétation sera notée $\Brackets{y}$
+\end{itemize}
+
+La présentation de $\Theta_1$ est déjà connue
+
+Soit $n\in\mathbb N^*$.
+On connaît $((V_n, E_n), \mathcal R_n)$ la présentation de $\Theta_n$. On va construire la présentation de $\Theta_{n+1}$.
+
+\subsubsection{Objets}
+Les objets de $\Theta_{n+1}$ sont donnés directement par la définition du produit en couronne, on pose :
+\[
+    V_{n+1} = \{(n_1,\dots,n_m)\in V_n^m,m\in\mathbb N,\}
+\]
+
+Leur interprétation est l'identité.
+
+\subsubsection{Morphismes}
+On introduit la notion de flèches «internes» et «externes».
+\begin{itemize}
+    \item Les flèches internes sont héritées de $\Theta_n$, elles agissent sur les objets présents dans le tuple objet.
+    \item Les flèches externes travaillent sur la liste des objets directement, de la même façon que les flèches de $\Delta$.
+\end{itemize}
+Cette intuition sera confirmée par l'expression formelle de la fonction d'interprétation plus bas.
+
+\textbf{Morphismes internes}
+On les noter $\mathcal I_{n+1}$.
+\[
+\mathcal I_{n+1}=\{x^{(n_1,\dots,n_m)}_{i,j},m\in\mathbb N,(n_1,\dots,n_m)\in V_{n+1},i\in[m],j\in n_i\}
+\]
+Soit $x^{(n_1,\dots,n_m)}_{i,j}\in \mathcal I_{n+1}$. Alors $x^{n_i}_j \in \mathcal I_n$ existe nécessairement.
+\[\
+\Brackets{x^{(n_1,\dots,n_m)}_{i,j}} : (k_1,\dots,k_m) \mapsto (k_1,\dots,\Brackets{x^{n_i}_j}(k_i),\dots,k_m)
+\]
+
+\textbf{Morphismes externes}
+On peut les noter $\mathcal E_{n+1}$
+\[
+\mathcal E_{n+1}=\{x^{(n_1,\dots,n_m)}_i,m\in\mathbb N,(n_1,\dots,n_m)\in V_{n+1},i\in [m]\}
+\]
+
+Soit $x^{(n_1,\dots,n_m)}_i \in \mathcal E_{n+1}$.
+\begin{itemize}
+    \item Si $x=\delta$.\[
+\Brackets{x^{(n_1,\dots,n_m)}_i} : (n_1,\dots,n_m)\mapsto (n_1,\dots,\hat{n_i},\dots,n_m)
+\]
+\item Si $x=\sigma$. \[
+\Brackets{x^{(n_1,\dots,n_m)}_i} : (n_1,\dots,n_m)\mapsto (n_1,\dots,n_i,n_i,n_{i+2},\dots,n_m)
+\]
+\end{itemize}
+
+\subsubsection{Relations}
+\textbf{Les relations héritées}
+Soient
+\[
+\begin{split}
+u & = x^{(n_{1,1},\dots,n_{1,m_1})}_{i_1,j_1}\dots x^{(n_{k,1},\dots,n_{k,m_k})}_{i_k,j_k}\\
+v & = x^{(n'_{1,1},\dots,n'_{1,m'_1})}_{i'_1,j'_1}\dots x^{(n'_{k',1},\dots,n'_{k',{m'}_{k'}})}_{{i'}_{k'},{j'}_{k'}}
+\end{split}
+\]
+
+On se donne aussi,
+
+\[\begin{split}
+u' & = x^{n_{1,i_1}}_{j_1}\dots x^{n_{k,i_k}}_{j_k}\\
+v' & = x^{n'_{1,i'_1}}_{j'_1}\dots x^{n'_{k',{i'}_{k'}}}_{{j'}_{k'}}
+\end{split}
+\]
+
+Alors, $(u,v)\in \mathcal R_{n+1}$ ssi. $(u',v')\in\mathcal R_n$.
+Cette classe de relations permet de propager les relations de $\Theta_n$.
+
+\textbf{Les relations simpliciales sur les flèches externes}
+Soient
+\[
+\begin{split}
+    u & = x^{n_{1,1},\dots,n_{1,m_1}}_{i_1}\dots,x^{(n_{k,1},\dots,n_{k,m_k})}_{i_k}\\
+    v & = x^{n'_{1,1},\dots,n'_{1,m'_1}}_{i'_1}\dots,x^{(n'_{k',1},\dots,n'_{k',{m'}_{k'}})}_{{i'}_{k'}}
+\end{split}
+\]
+
+On se donne aussi,
+
+\[
+\begin{split}
+    u' & = x^{m_1}_{i_1}\dots,x^{m_k}_{i_k}\\
+    v' & = x^{m'_1}_{i'_1}\dots,x^{m'_{k'}}_{{i'}_{k'}}
+\end{split}
+\]
+
+Alors, $(u,v)\in\mathcal R_{n+1}$ ssi. $(u',v')\in\mathcal R_\Delta$.
+
+\textbf{Echange loin des internes}
+Lorsque des flèches internes ne concernent pas les mêmes cases, on peut les échanger.
+Soient $m\in\mathbb N$, $(n_1,\dots,n_m) \in V_{n+1}$, $i,i'\in[m]$ tq $i\neq i'$, $(j,j')\in(n_i,n_{i'})$.
+Alors, $(x^{(n_1,\dots,n_m)}_{i,j}x^{(n_1,\dots,n_m)}_{i',j'},x^{(n_1,\dots,n_m)}_{i',j'}x^{(n_1,\dots,n_m)}_{i,j}) \in \mathcal R_{n+1}$
+
+\textbf{Relations croisées}
+Lorsqu'une flèche interne suit une flèche externe, on peut la faire passer «avant» la flèche externe, sous condition de modifier les indices proprement.
+
+Pour mieux comprendre les cas à considérer, deux dessins :
+
+\begin{tikzcd}
+0 \arrow[dd] & 1 \arrow[dd] & 2 \arrow[rdd] & 3 \arrow[rdd] & 4 \arrow[rdd] &   \\
+              &               &                &                &                &   \\
+0             & 1             & 2              & 3              & 4              & 5
+\end{tikzcd}
+
+Les deux premiers points correspondent à une zone de \textbf{commutation}.
+
+Le suivant correspond à une zone de \textbf{disparation}.
+
+Les trois derniers correspondent à une zone de \textbf{décalage}.
+
+\begin{tikzcd}
+0 \arrow[dd] & 1 \arrow[dd] & 2 \arrow[dd] & 3 \arrow[ldd] & 4 \arrow[ldd] & 5 \arrow[ldd] \\
+              &               &               &                &                &                \\
+0             & 1             & 2             & 3              & 4              &               
+\end{tikzcd}
+
+Les deux premiers points correspondent à une zone de \textbf{commutation}.
+
+Le suivant correspond à une zone de \textbf{dédoublement}.
+
+Les deux derniers correspondent à une zone de \textbf{décalage}.
+
+\[
+  \delta^{(n_1,\dots,n_m)}_i x^{(n_1,\dots,\hat{n_i},\dots,n_m)}_{k,j} =
+    \begin{cases}
+      x^{(n_1,\dots,n_m)}_{k,j} \delta^{(n_1,\dots,n_m)}_i& \text{si $k<i$}\\
+      \delta^{(n_1,\dots,n_m)}_i & \text{si $i=k$}\\
+      x^{(n_1,\dots,n_m)}_{k-1,j} \delta^{(n_1,\dots,n_m)}_{i} & \text{si $k>i$}
+    \end{cases}
+\]
+\[
+  \sigma^{(n_1,\dots,n_m)}_i x^{(n_1,\dots,\hat{n_i},\dots,n_m)}_{k,j} =
+    \begin{cases}
+      x^{(n_1,\dots,n_m)}_{k,j} \sigma^{(n_1,\dots,n_m)}_i& \text{si $k<i$}\\
+      x^{(n_1,\dots,n_m)}_{k,j}x^{(n_1,\dots,n_m)}_{k+1,j}\delta^{(n_1,\dots,n_m)}_i & \text{si $i=k$}\\
+      x^{(n_1,\dots,n_m)}_{k+1,j} \sigma^{(n_1,\dots,n_m)}_{i} & \text{si $k>i$}
+    \end{cases}
+\]
+
+\subsubsection{Forme canonique unique}
+On démontre par récurrence à droite que tout mot de composition de flèches de $G_{n+1}$ possède une forme canonique unique de la forme $\text{internes}\circ\text{externes}$.
+
+La démonstration n'est pas très intéressante, car les cas difficiles ont déjà été faits dans la présentation de $\Delta$. En effet, les relations donnent directement le passage des internes le plus à gauche possible. 
+
+\textdbend Pour assurer l'unicité, il faut néanmoins faire attention et imposer un autre sur la commutation des internes loins. Par exemple, l'ordre croissant sur le premier indice (sélection de la case)
+
+La mise sous forme canonique des deux «côtés» est ensuite directe par la présentation de $\Delta$.
+
+\subsubsection{Présentation}
+
+Pour montrer la bijection de l'interprétation, il suffit de montrer que la fonction d'interprétation est bijective sur les formes canoniques.
+En l'occurrence, on peut se restreindre à l'identité.
+
+Or, la forme canonique de l'identité est nécessairement l'identité (c'est-à-dire le mot vide), et on a bien $\Brackets{\varepsilon} = \varepsilon$. Ainsi, on a bien une présentation par générateurs $(V_{n+1}, E_{n+1})$ et relations $\mathcal R_{n+1}$ de $\Theta_{n+1}$.
+
+\begin{thebibliography}{9}
+\bibitem{iteratedwp}
+Clemens Berger (2005) \emph{Iterated wreath product of the simplex category and
+iterated loop spaces}, Advances in Mathematics.
+
+\bibitem{thetajoyal}
+Andre Joyal (1997) \emph{Disks, duality and $\Theta$-categories}, draft.
+
+\bibitem{knuthvol3}
+Donald E. Knuth (1998) \emph{The Art of Computer Programming Vol. 3}, Stanford Computer Science
+
+\bibitem{catswm}
+Saunders Mac Lane (1978) \emph{Categories for the Working Mathematician}, Springer Nature.
+\end{thebibliography}
+\end{document}
