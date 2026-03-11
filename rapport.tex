@@ -11,13 +11,9 @@
 \usepackage{tikz-cd}
 \usepackage[only,llbracket,rrbracket]{stmaryrd}
 \usepackage{manfnt}
-\DeclarePairedDelimiter\Brackets{\left\llbracket}{\right\rrbracket}
-\usetikzlibrary{matrix,graphs,graphs.standard}
-
-\title{Rapport TER}
-\author{Lucas Rooy}
-\date{Janvier 2026}
-
+%%%%%%%%%%%%%%%%%%%%
+% CUSTOM DEFINITIONS
+%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{definition}
 \newtheorem{notation}{Notation}[section]
 
@@ -32,6 +28,15 @@
 \newtheorem{corollaire}[theoreme]{Corollaire}
 \newtheorem{proposition}[theoreme]{Proposition}
 \newtheorem{exemple}[theoreme]{Exemple}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IGNORER LES ERREURS DUES A [\Brackets] ELLES NE POSENT PAS 
+% REELLEMENT PROBLEME
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclarePairedDelimiter\Brackets{\left\llbracket}{\right\rrbracket}
+
+\title{Rapport TER}
+\author{Lucas Rooy}
+\date{Janvier 2026}
 
 \begin{document}
 
@@ -68,9 +73,6 @@ Dans le cas d'une catégorie, l'ensemble d'objets devient un graphe $G$.
 cf. MacLane\cite{catswm}
 \end{definition}
 
-\subsection{Motivation}
-
-
 \section{La catégorie $\Delta$ et autres}
 \subsection{Catégorie $\Delta$}
 \subsubsection{Définition}
@@ -105,7 +107,7 @@ On peut représenter une flèche de $\text{Hom}_\Delta([m], [n])$ par un graphe.
 \end{notabene}
 
 \subsubsection{Présentation}
-\textit{Cette partie est inspirée voire recopiée du MacLane\cite{catswm}, car elle est utile pour la compréhension du rapport mais aussi car j'ai passé du temps dessus avant de passer à $\Theta$.}
+\textit{Cette partie est largement recopiée du MacLane\cite{catswm}, car elle est utile pour la compréhension du rapport mais aussi car j'ai passé du temps dessus avant de passer à $\Theta$.}
 
 
 On se donne un graphe G avec pour sommets $V = \{[n], n\in\mathbb N\}$.
@@ -148,7 +150,7 @@ Ainsi, $E$ est donné par $\{\tau_i^n, n \in \mathbb N^*, i\in[n]\}$.
 \begin{notabene}[Tri à bulles]
 Par l'algorithme du tri à bulles\cite{knuthvol3}, toute permutation peut se mettre sous la forme d'un produit de permutations adjacentes, ce qui donne l'idée de cette présentation. 
 
-Sans aller trop en détails, il s'agit d'un algorithme de tri déterministe par application de permutations adjacentes successives. Comme l'algorithme est déterministe, la suite de permutations adjacentes est canonique. On peut l'inverser pour obtenir le sens voulu
+Sans aller trop en détails, il s'agit d'un algorithme de tri déterministe par application de permutations adjacentes successives. Comme l'algorithme est déterministe, la suite de permutations adjacentes est canonique. On peut l'inverser pour obtenir le sens voulu.
 \end{notabene}
 
 
@@ -159,7 +161,16 @@ Pour les règles :
     \item $\tau_{i+1}\tau_i\tau_{i+1}=\tau_i\tau_{i+1}\tau_i$
 \end{itemize}
 
-TODO : recopier la preuve depuis le Git
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{forme_normale_permutations.jpeg}
+    \caption{Forme Canonique Permutations}
+    \label{fig:enter-label}
+\end{figure}
+
+On a donc une forme canonique, elle est pratique, car la forme normale de l'identité est aussi l'identité.
+Ainsi, la fonction d'interprétation étendue est bien bijective.
+
 \subsection{Catégorie $F$}
 \subsubsection{Définition}
 Il s'agit d'une catégorie qui contient $\Delta$ où les hom-sets sont : $\text{Hom}_F([m],[n])=\mathcal F([m],[n])$.
@@ -189,16 +200,19 @@ cf. nLab.
     \end{cases}\cite{iteratedwp}
 \]
 \end{definition}
+\begin{notabene}[Cas n=0]
+En réalité, on peut commencer la définition à $n=0$ en utilisant la catégorie unitaire pour $\Theta_0$, ce qui aboutit à une seconde définition de $\Delta$.
+\end{notabene}
 \subsection{Présentation de la catégorie $\Theta$}
 C'est une présentation \textbf{inductive}, basée sur la définition du produit en couronne.
 
 Quelques notations :
 \begin{itemize}
-    \item $x$ désigne textuellement soit $\delta$ soit $\sigma$, pour garder le document concis
-    \item Pour tout $n\in\mathbb N^*$, $V_n$, les sommets du graphe de la présentation de $\Theta_n$ 
-    \item Pour $n\in\mathbb N$, $E_n$, les arêtes du graphe de la présentation de $\Theta_n$
-    \item Pour $n\in\mathbb N$, $\mathcal R_n \subseteq (E_n^*)²$ les relations de la présentation de $\Theta_n$
-    \item Pour un morphisme générateur $y$, son interprétation sera notée $\Brackets{y}$
+    \item $x$ désigne textuellement soit $\delta$ soit $\sigma$, pour garder le document concis,
+    \item Pour tout $n\in\mathbb N^*$, $V_n$, les sommets du graphe de la présentation de $\Theta_n$,
+    \item Pour $n\in\mathbb N$, $E_n$, les arêtes du graphe de la présentation de $\Theta_n$,
+    \item Pour $n\in\mathbb N$, $\mathcal R_n \subseteq (E_n^*)²$ les relations de la présentation de $\Theta_n$,
+    \item Pour une arête $y$ de $G_n$, son interprétation sera notée $\Brackets{y}_n$. C'est une fonction $\Brackets{.}_n : E_n\to \Theta_n$ compatible avec les relations $\mathcal R_n$. Elle possède une extension naturelle à la catégorie libre sur le graphe notée $\Brackets{.}_n^*$ (il s'agit alors d'un foncteur).
 \end{itemize}
 
 La présentation de $\Theta_1$ est déjà connue
@@ -229,7 +243,7 @@ On les noter $\mathcal I_{n+1}$.
 \]
 Soit $x^{(n_1,\dots,n_m)}_{i,j}\in \mathcal I_{n+1}$. Alors $x^{n_i}_j \in \mathcal I_n$ existe nécessairement.
 \[\
-\Brackets{x^{(n_1,\dots,n_m)}_{i,j}} : (k_1,\dots,k_m) \mapsto (k_1,\dots,\Brackets{x^{n_i}_j}(k_i),\dots,k_m)
+\Brackets{x^{(n_1,\dots,n_m)}_{i,j}}_{n+1}^* : (k_1,\dots,k_m) \mapsto (k_1,\dots,\Brackets{x^{n_i}_j}_n^*(k_i),\dots,k_m)
 \]
 
 \textbf{Morphismes externes}
@@ -241,10 +255,10 @@ On peut les noter $\mathcal E_{n+1}$
 Soit $x^{(n_1,\dots,n_m)}_i \in \mathcal E_{n+1}$.
 \begin{itemize}
     \item Si $x=\delta$.\[
-\Brackets{x^{(n_1,\dots,n_m)}_i} : (n_1,\dots,n_m)\mapsto (n_1,\dots,\hat{n_i},\dots,n_m)
+\Brackets{x^{(n_1,\dots,n_m)}_i}_{n+1}^* : (n_1,\dots,n_m)\mapsto (n_1,\dots,\hat{n_i},\dots,n_m)
 \]
 \item Si $x=\sigma$. \[
-\Brackets{x^{(n_1,\dots,n_m)}_i} : (n_1,\dots,n_m)\mapsto (n_1,\dots,n_i,n_i,n_{i+2},\dots,n_m)
+\Brackets{x^{(n_1,\dots,n_m)}_i}_{n+1}^* : (n_1,\dots,n_m)\mapsto (n_1,\dots,n_i,n_i,n_{i+2},\dots,n_m)
 \]
 \end{itemize}
 
@@ -305,11 +319,11 @@ Pour mieux comprendre les cas à considérer, deux dessins :
 0             & 1             & 2              & 3              & 4              & 5
 \end{tikzcd}
 
-Les deux premiers points correspondent à une zone de \textbf{commutation}.
+Les deux premiers points correspondent à un intervalle de \textbf{commutation}.
 
-Le suivant correspond à une zone de \textbf{disparation}.
+Le suivant correspond à un intervalle de \textbf{disparation}.
 
-Les trois derniers correspondent à une zone de \textbf{décalage}.
+Les trois derniers correspondent à un intervalle de \textbf{décalage}.
 
 \begin{tikzcd}
 0 \arrow[dd] & 1 \arrow[dd] & 2 \arrow[dd] & 3 \arrow[ldd] & 4 \arrow[ldd] & 5 \arrow[ldd] \\
@@ -317,11 +331,11 @@ Les trois derniers correspondent à une zone de \textbf{décalage}.
 0             & 1             & 2             & 3              & 4              &               
 \end{tikzcd}
 
-Les deux premiers points correspondent à une zone de \textbf{commutation}.
+Les deux premiers points correspondent à un intervalle de \textbf{commutation}.
 
-Le suivant correspond à une zone de \textbf{dédoublement}.
+Le suivant correspond à un intervalle de \textbf{dédoublement}.
 
-Les deux derniers correspondent à une zone de \textbf{décalage}.
+Les deux derniers correspondent à un intervalle de \textbf{décalage}.
 
 \[
   \delta^{(n_1,\dots,n_m)}_i x^{(n_1,\dots,\hat{n_i},\dots,n_m)}_{k,j} =
@@ -343,18 +357,39 @@ Les deux derniers correspondent à une zone de \textbf{décalage}.
 \subsubsection{Forme canonique unique}
 On démontre par récurrence à droite que tout mot de composition de flèches de $G_{n+1}$ possède une forme canonique unique de la forme $\text{internes}\circ\text{externes}$.
 
-La démonstration n'est pas très intéressante, car les cas difficiles ont déjà été faits dans la présentation de $\Delta$. En effet, les relations donnent directement le passage des internes le plus à gauche possible. 
+La démonstration n'est pas très intéressante, car les cas difficiles ont déjà été faits dans la présentation de $\Delta$. En effet, les relations donnent directement le passage des internes le plus à gauche possible.
 
-\textdbend Pour assurer l'unicité, il faut néanmoins faire attention et imposer un autre sur la commutation des internes loins. Par exemple, l'ordre croissant sur le premier indice (sélection de la case)
+\textdbend Pour assurer l'unicité, il faut néanmoins faire attention et imposer un ordre sur la commutation des internes loins (par exemple, l'ordre croissant sur le premier indice (sélection de la case)), ainsi que sur la commutation des externes (comme fait pour présenter $\Delta$). 
+
+\textbf{A RETRAVAILLER, MAIS IDEE PREUVE :}
+
+Mots $\text{internes} \circ \text{externes}$, ajout d'un morphisme à droite.
+\begin{itemize}
+\item Si il est externe : les relations le mettent dans le bon ordre. Avec la relation d'ordonnancement: on a un ordre. OK.
+\item Si il est interne : les relations la font percoler jusqu'aux autres internes. Avec les relations de commutation : premier ordre. Parmi celles qui ne commutent pas, on applique bien les relations héritées pour obtenir une forme normale
+\end{itemize}
 
 La mise sous forme canonique des deux «côtés» est ensuite directe par la présentation de $\Delta$.
 
+Pour un morphisme de $G_{n+1}^*$ $f$, on pourra noter $\overline{f}$ sa classe d'équivalence pour les relations $\mathcal R_{n+1}$, et $\tilde{\overline{f}}$ la forme canonique de sa classe d'équivalence.
+
 \subsubsection{Présentation}
 
-Pour montrer la bijection de l'interprétation, il suffit de montrer que la fonction d'interprétation est bijective sur les formes canoniques.
-En l'occurrence, on peut se restreindre à l'identité.
+On a donc :
 
-Or, la forme canonique de l'identité est nécessairement l'identité (c'est-à-dire le mot vide), et on a bien $\Brackets{\varepsilon} = \varepsilon$. Ainsi, on a bien une présentation par générateurs $(V_{n+1}, E_{n+1})$ et relations $\mathcal R_{n+1}$ de $\Theta_{n+1}$.
+\begin{itemize}
+    \item Une bijection entre les morphismes de la catégorie libre $G_{n+1}^*$ et un ensemble de formes canoniques.
+    \item Une fonction d'interprétation $\Brackets{.}_{n+1}^*:G_{n+1}^*\to \Theta_{n+1}$. On cherche à montrer sa bijection modulo les classes d'équivalences induites par $\mathcal R_{n+1}$, donc, on peut ne s'intéresser qu'à la bijection $\Brackets{.}_{n+1} : G_{n+1}^*/\mathcal R_{n+1} \to \Theta_{n+1}$. En l'occurrence, on utilisera comme représentants de chaque classe d'équivalence, la forme canonique associée.
+\end{itemize}
+
+Je fais la preuve de bijection par injection + surjection du foncteur.
+
+\begin{itemize}
+    \item \textbf{Injectivité}. On a forcément $\tilde{\overline{\text{Id}}}=\text{Id}$. Donc, $\Brackets{\tilde{\overline{\text{Id}}}}_{n+1}^*=\Brackets{\text{Id}}_{n+1}^*=\text{Id}$. C'est donc bien injectif.
+    \item \textbf{Surjectivité}. C'est le cas difficile. Il faut donner la forme canonique de n'importe quel morphisme de $\Theta_{n+1}$. D'après Berger\cite{iteratedwp} (Remark 3.15, preprint), un morphisme de $\Theta_{n+1}$ est vu comme le produit d'un morphisme interne et d'un morphisme externe. C'est donc bien la construction voulue et l'interprétation étoilée est bien surjective. \textbf{MODIFIER CE PARAGRAPHE POUR REFAIRE LA PREUVE. JE NE SUIS PAS SÛR DE CELLE DE BERGER (SUPPR. DANS L'ARTICLE SOUMIS)}
+\end{itemize}
+
+Ainsi, on obtient bien une présentation par générateurs et relations de toutes les $\Theta_n$ catégories.
 
 \begin{thebibliography}{9}
 \bibitem{iteratedwp}
